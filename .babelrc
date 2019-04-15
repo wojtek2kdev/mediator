@@ -1,0 +1,4 @@
+{
+  presets: ['@babel/env'],
+  plugins: ["@babel/transform-regenerator", "@babel/plugin-syntax-dynamic-import"]
+}
