@@ -1,0 +1,24 @@
+version: '3'
+services:
+  app:
+    build: .
+    container_name: app 
+    hostname: app
+    ports:
+      - "80:80"
+    depends_on:
+      - redis
+    networks:
+      - mediator
+    volumes: 
+      - "./:/usr/src/app"
+  redis:
+    image: 'redislabs/rejson'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - "6379:6379"
+networks:
+  mediator:
+    driver: bridge
