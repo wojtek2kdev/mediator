@@ -1,1 +1,0 @@
- openssl s_client -showcerts -connect context.reverso.net:443 < /dev/null 2 > /dev/null | openssl x509 -outform PEM > cert.pem
