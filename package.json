@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/wojtek2kdev/mediator/issues"
   },
-  "homepage": "https://github.com/wojtek2kdev/mediator#readme"
+  "homepage": "https://github.com/wojtek2kdev/mediator#readme",
+  "dependencies": {
+    "apollo-server": "^2.4.8",
+    "apollo-server-express": "^2.4.8",
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.3",
+    "graphql": "^14.2.1",
+    "redis": "^2.8.0"
+  }
 }
