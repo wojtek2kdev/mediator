@@ -25,7 +25,38 @@ const fetchTranslation = async ({from, to, word}) => {
 	});
 
 	return data;
-}; 
+};
+
+const extractType = (container) => 
+	$('div>.result-block-header>h3>.suffix', container)
+	.text()
+	.replace(/{|}/g, '');
+
+const extractWords = (container) => {
+	const words = [];
+	$('.sense-group>div>.dict-translation>.dict-result>a>strong', container)
+		.each((i, word) => {
+			word = $(word).text();
+			words.push(word);
+		}); 
+	return words;
+};
+
+const extractSentences = (container) => {
+	const sentences = [];
+	
+	$('.dict-example>.dict-result', container)
+		.each((i, sentence) => {
+			$('a', sentence).remove();
+			sentences.push($(sentence).text().trim());
+		});
+
+	return sentences;
+};
+
+const extractSynonyms = ({document, result}) => {
+
+};
 
 const extractTranslations = (document) => {
 	const result = {
@@ -35,47 +66,39 @@ const extractTranslations = (document) => {
 	const translations = $('div[id^=translation]', document);
 
 	if(translations.length){
-		translations.each((index, element) => {
-			const type = $('div>.result-block-header>h3>.suffix' ,element).text().replace(/{|}/g, '');
-			const words = [];
-			$('.sense-group>div>.dict-translation>.dict-result>a>strong', element).each((i, word) => {
-				word = $(word).text();
-				words.push(word);
-			}); 
+		translations.each((index, container) => {
+			const type = extractType(container);
+			let words = extractWords(container);
+
+			words = words.reduce((obj, word) => {
+				const properties = {
+					sentences: extractSentences(container),
+				};
+				obj[word] = properties;
+				return obj;
+			}, {});
+
 			result.translations[translationTypes[type]] = words; 
 		});	
 	}
 
-	return {
-		document,
-		result
-	}
+	return result;
 };
 
-const extractSentences = ({document, result}) => {
-
-	return {
-		document, result
-	}
-};
-
-const extractSynonyms = ({document, result}) => {
-
-};
 
 const scraping = async (args) => {
 	const document = await fetchTranslation(args);
 	
-	const { result } = extractTranslations(document);
+	const translations = extractTranslations(document);
 
-	console.log(result);
+	console.log(translations);
 };
 
 (async() => {
 	await scraping({
 		from: 'polski',
 		to: 'angielski',
-		word: 'zwierzątko',
+		word: 'jak',
 	});
 })();
 
