@@ -18,7 +18,7 @@ const translationTypes = {
 const fetchTranslation = async ({from, to, word}) => {
 	const baseURL = 'https://pl.bab.la/slownik';
 
-	const {data} = await get(`https://pl.bab.la/slownik/${from}-${to}/${word}`, {
+	const {data} = await get(`https://pl.bab.la/slownik/${from}-${to}/${encodeURI(word)}`, {
 		headers: {
 			'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
 		},
@@ -75,7 +75,7 @@ const scraping = async (args) => {
 	await scraping({
 		from: 'polski',
 		to: 'angielski',
-		word: 'jak',
+		word: 'zwierzątko',
 	});
 })();
 
