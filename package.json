@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node cache.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,9 @@
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.3",
     "graphql": "^14.2.1",
-    "redis": "^2.8.0"
+    "lodash": "^4.17.11",
+    "redis": "^2.8.0",
+    "redis-rejson": "^1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
