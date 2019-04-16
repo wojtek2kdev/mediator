@@ -14,11 +14,15 @@ services:
       - "./:/usr/src/app"
   redis:
     image: 'redislabs/rejson'
+    container_name: redis 
+    hostname: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
     ports:
       - "6379:6379"
+    networks:
+      - mediator
 networks:
   mediator:
     driver: bridge
