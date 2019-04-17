@@ -54,13 +54,19 @@ const extractSentences = (container) => {
 	return sentences;
 };
 
-const extractSynonyms = ({document, result}) => {
-
+const extractSynonyms = (document) => {
+	const synonyms = [];
+	$('#synonyms > div > div.quick-result-entry > div.quick-result-overview > ul > li', document)
+		.each((i, synonym) => {
+			synonyms.push($(synonym).text().trim());
+		});
+	return synonyms;
 };
 
 const extractTranslations = (document) => {
 	const result = {
 		translations: {},
+		synonyms: []
 	};
 
 	const translations = $('div[id^=translation]', document);
@@ -82,6 +88,10 @@ const extractTranslations = (document) => {
 		});	
 	}
 
+	const synonyms = extractSynonyms(document);
+
+	result.synonyms = synonyms;
+
 	return result;
 };
 
@@ -96,9 +106,9 @@ const scraping = async (args) => {
 
 (async() => {
 	await scraping({
-		from: 'polski',
-		to: 'angielski',
-		word: 'jak',
+		from: 'angielski',
+		to: 'polski',
+		word: 'since',
 	});
 })();
 
